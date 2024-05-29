@@ -18,9 +18,15 @@ jobs:
           go-version-file: 'go.mod'
           cache-dependency-path: 'go.sum'
       - name: 'Build'
-        working-directory: 'go/proxy'
         env:
           GOOS: 'linux'
           GOARCH: 'arm64'
           CGO_ENABLED: '0'
         run: 'go build -o gw2-build-api -tags "lambda,lambda.norpc"'
+      - name: 'Make executable'
+        run: 'chmod +x gw2-build-api'
+      - name: 'Store artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: 'gw2-build-api'
+          path: 'gw2-build-api'
