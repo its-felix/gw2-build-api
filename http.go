@@ -10,6 +10,10 @@ import (
 	"strings"
 )
 
+type buildApiResponse struct {
+	Id int `json:"id"`
+}
+
 func setupMux() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
