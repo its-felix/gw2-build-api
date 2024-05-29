@@ -22,11 +22,11 @@ jobs:
           GOOS: 'linux'
           GOARCH: 'arm64'
           CGO_ENABLED: '0'
-        run: 'go build -o gw2-build-api -tags "lambda,lambda.norpc"'
-      - name: 'Make executable'
-        run: 'chmod +x gw2-build-api'
+        run: 'go build -o bootstrap -tags "lambda,lambda.norpc"'
+      - name: 'Prepare lambda bundle'
+        run: '(chmod +x bootstrap && zip -q lambda_bundle.zip bootstrap && rm bootstrap)'
       - name: 'Store artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: 'gw2-build-api'
-          path: 'gw2-build-api'
+          name: 'lambda_bundle.zip'
+          path: 'lambda_bundle.zip'
