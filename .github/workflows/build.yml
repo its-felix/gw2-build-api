@@ -1,0 +1,26 @@
+name: 'Build'
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    name: 'Build'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+      - name: 'Setup go'
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+          cache-dependency-path: 'go.sum'
+      - name: 'Build'
+        working-directory: 'go/proxy'
+        env:
+          GOOS: 'linux'
+          GOARCH: 'arm64'
+          CGO_ENABLED: '0'
+        run: 'go build -o gw2-build-api -tags "lambda,lambda.norpc"'
